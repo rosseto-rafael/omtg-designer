@@ -1,0 +1,32 @@
+# Git files
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# Build artifacts
+*.class
+*.jar
+!libs/*.jar
+!www/WEB-INF/lib/*.jar
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+temp/
+
+# Documentation
+*.md
+!README.md
+LICENSE
+

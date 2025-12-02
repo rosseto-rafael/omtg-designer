@@ -17,6 +17,23 @@ The [OMT-G (Object Modeling Technique for Geographic Applications)](http://homep
 
 
 
+## Docker Deployment
+
+The application can be deployed using Docker:
+
+```bash
+docker-compose up -d
+```
+
+Access the application at: `http://localhost:8080`
+
+### Requirements
+
+- Docker (version 20.10+)
+- Docker Compose (version 2.0+)
+
+
+
 License and Copyright
 ---------------------
 
