@@ -10,7 +10,7 @@
 			'click #btnImportXML' : 'importXML',
 			'click #btnExportXML' : 'exportXML',
 			'click #btnExportSQL' : 'exportSQL',
-			'click #btnExportPostgis' : 'exportPostgis',
+			'click #btnExportAstPostgis' : 'exportAstPostgis',
 			'click #btnPrint' : 'print',
 			'click #btnAbout' : 'showAbout',
 			
@@ -77,7 +77,7 @@
 			}, false);
 		},	
 		
-		exportPostgis : function() {
+		exportAstPostgis : function() {
 			
 			if(app.canvas.get('diagrams').length == 0){
 				alert(app.msgs.EMPTY_PROJECT);
@@ -89,14 +89,14 @@
 				var xml = app.canvas.toXML();
 				var xhr = new XMLHttpRequest();
 				
-				xhr.open("POST", "omtg2postgis", true);
+				xhr.open("POST", "omtg2astpostgis", true);
 				xhr.setRequestHeader("Content-type","application/json");
 				xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 				
 				xhr.onreadystatechange = function() {
 				    if (xhr.readyState == 4 && xhr.status == 200) {				  
 				        var blob = new Blob([xhr.response], {type: "octet/stream"});
-				        var fileName = "OMTG-Postgis.zip";
+				        var fileName = "OMTG-AstPostgis.zip";
 				        saveAs(blob, fileName);
 				    }
 				}

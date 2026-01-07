@@ -11,21 +11,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.omtg2sql.core.OMTG2Postgis;
+import com.omtg2sql.core.OMTG2AstPostgis;
 import com.omtg2sql.omtg.model.OMTGSchema;
 import com.omtgdesigner.utils.Zip;
 import com.omtgdesigner.xml.XMLParser;
 
 /**
- * Servlet implementation class omtg2postgis
+ * Servlet implementation class omtg2astpostgis
  */
-public class omtg2postgis extends HttpServlet {
+public class omtg2astpostgis extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public omtg2postgis() {
+	public omtg2astpostgis() {
 		super();
 	}
 
@@ -53,8 +53,8 @@ public class omtg2postgis extends HttpServlet {
 				StringWriter dynamicSW = new StringWriter();
 
 				// Maps the omtg to sql
-				OMTG2Postgis omtg2postgis = new OMTG2Postgis(omtgSchema, ddlSW, staticSW, dynamicSW);
-				omtg2postgis.mapOMTGSchemaToPostgis();
+				OMTG2AstPostgis omtg2astpostgis = new OMTG2AstPostgis(omtgSchema, ddlSW, staticSW, dynamicSW);
+				omtg2astpostgis.mapOMTGSchemaToAstPostgis();
 				
 				StringWriter constraints = dynamicSW.append(staticSW.toString());
 				
@@ -63,7 +63,7 @@ public class omtg2postgis extends HttpServlet {
 				// Sets HTTP header
 				response.setContentType("octet/stream; charset=UTF-16"); 
 				response.setContentLength(byteBuffer.length);
-				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-Postgis.zip\"");
+				response.setHeader("Content-Disposition", "attachment; filename=\"OMTG-AstPostgis.zip\"");
 
 				// Writes the response data
 				ServletOutputStream servletOutputStream = response.getOutputStream(); 
@@ -77,3 +77,4 @@ public class omtg2postgis extends HttpServlet {
 		}
 	}
 }
+

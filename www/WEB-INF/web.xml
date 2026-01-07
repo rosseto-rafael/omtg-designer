@@ -31,12 +31,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>omtg2postgis</display-name>
-    <servlet-name>omtg2postgis</servlet-name>
-    <servlet-class>com.omtgdesigner.servlets.omtg2postgis</servlet-class>
+    <display-name>omtg2astpostgis</display-name>
+    <servlet-name>omtg2astpostgis</servlet-name>
+    <servlet-class>com.omtgdesigner.servlets.omtg2astpostgis</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>omtg2postgis</servlet-name>
-    <url-pattern>/omtg2postgis</url-pattern>
+    <servlet-name>omtg2astpostgis</servlet-name>
+    <url-pattern>/omtg2astpostgis</url-pattern>
   </servlet-mapping>
 </web-app>
