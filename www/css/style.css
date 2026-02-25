@@ -430,3 +430,59 @@ span.keyboard-shortcut {
     padding-left: 50px;
     color: gray;
 }
+
+
+/*
+ * Print
+ */
+@media print {
+	.navbar-fixed-top,
+	.navbar-fixed-bottom,
+	.section-sidebar {
+		display: none !important;
+	}
+
+	.section-canvas {
+		position: absolute !important;
+		overflow: visible !important;
+		top: 0 !important;
+		bottom: auto !important;
+		right: auto !important;
+		left: 0 !important;
+	}
+
+	#canvas {
+		padding: 0 !important;
+	}
+
+	.canvas-background {
+		background-image: none !important;
+	}
+
+	.diagram-container-shadow {
+		box-shadow: none !important;
+	}
+
+	.badge-delete,
+	.badge-edit {
+		display: none !important;
+	}
+
+	.diagram-container {
+		background-color: #fff !important;
+	}
+
+	.diagram-container .d-header .d-icon {
+		border-width: 0.5mm !important;
+	}
+
+	.diagram-container .d-header .d-title {
+		border-width: 0.5mm !important;
+	}
+
+	.diagram-container .d-body {
+		border-left-width: 0.5mm !important;
+		border-right-width: 0.5mm !important;
+		border-bottom-width: 0.5mm !important;
+	}
+}

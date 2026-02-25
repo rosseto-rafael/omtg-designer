@@ -149,13 +149,41 @@
 		
 		print : function(){
 			this.model.get('diagrams').unselectAll();
-			
-			this.$el.children().printThis({
-				debug: false,
-				importCSS: true, 
-		        importStyle: false,        
-				printContainer: true
+
+			var $canvas = this.$el;
+			var maxRight = 0;
+			var maxBottom = 0;
+
+			$canvas.find('.diagram-container').each(function(){
+				var $d = $(this);
+				var pos = $d.position();
+				var right = pos.left + $d.outerWidth(true);
+				var bottom = pos.top + $d.outerHeight(true);
+				if(right > maxRight) maxRight = right;
+				if(bottom > maxBottom) maxBottom = bottom;
 			});
+
+			var padding = 80;
+			var origWidth = $canvas[0].style.width;
+			var origHeight = $canvas[0].style.height;
+
+			if(maxRight > 0 && maxBottom > 0){
+				$canvas.css({
+					'width': (maxRight + padding) + 'px',
+					'height': (maxBottom + padding) + 'px'
+				});
+			}
+
+			var restoreCanvas = function(){
+				$canvas.css({
+					'width': origWidth,
+					'height': origHeight
+				});
+				window.removeEventListener('afterprint', restoreCanvas);
+			};
+
+			window.addEventListener('afterprint', restoreCanvas);
+			window.print();
 		},
 		
 		openContextMenu : function(event) { 
