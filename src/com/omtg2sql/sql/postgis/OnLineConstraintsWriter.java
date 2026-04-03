@@ -280,9 +280,11 @@ public class OnLineConstraintsWriter extends SQLWriter {
 
 			if (!subClassesTableNames.get(i).equalsIgnoreCase(subClassTableName)) {
 
-				String select = "    SELECT COUNT(*) INTO n\n"
-						+ "      FROM <SUBCLASSES_TABLE_NAMES>\n"
-						+ "      WHERE <DISJOINT_CONDITION>;\n";
+				String select = "    SELECT EXISTS (\n"
+						+ "        SELECT 1\n"
+						+ "        FROM <SUBCLASSES_TABLE_NAMES>\n"
+						+ "        WHERE <DISJOINT_CONDITION>\n"
+						+ "    ) INTO n;\n";
 				select = FormatSQL.replace(select, SUBCLASSES_TABLE_NAMES,
 						FormatSQL.tableToString(subClassesTableNames.get(i)));
 				select = FormatSQL.replace(select, DISJOINT_CONDITION,
@@ -292,7 +294,7 @@ public class OnLineConstraintsWriter extends SQLWriter {
 				String keysArgs = FormatSQL.columnsToArgsList(subClassTableKeys, "NEW.", superClassTableName);
 				String argsClause = keysArgs.isEmpty() ? "" : ", " + keysArgs;
 
-				String raise = "    IF n >= 1 THEN\n"
+				String raise = "    IF n THEN\n"
 						+ "      RAISE EXCEPTION 'Disjoint constraint of generalization on table "
 						+ subClassTableName + " " + keysFormat + "is violated'" + argsClause + ";\n"
 						+ "    END IF;\n";

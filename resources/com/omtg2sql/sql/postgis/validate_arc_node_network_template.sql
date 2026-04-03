@@ -5,6 +5,7 @@ RETURNS TEXT AS $$
 DECLARE
     arc_rec RECORD;
     node_count INTEGER;
+    node_found BOOLEAN;
     initial_vertex GEOMETRY;
     final_vertex GEOMETRY;
     has_error BOOLEAN := FALSE;
@@ -54,12 +55,14 @@ BEGIN
     
     -- Check each node is connected to at least one arc
     FOR arc_rec IN SELECT ctid, geom, <NODE_TABLE_KEYS> as keys FROM <NODE_TABLE_NAME> LOOP
-        SELECT COUNT(*) INTO node_count
-        FROM <ARC_TABLE_NAME> a
-        WHERE ST_Equals(arc_rec.geom, ST_StartPoint(a.geom))
-           OR ST_Equals(arc_rec.geom, ST_EndPoint(a.geom));
+        SELECT EXISTS (
+            SELECT 1
+            FROM <ARC_TABLE_NAME> a
+            WHERE ST_Equals(arc_rec.geom, ST_StartPoint(a.geom))
+               OR ST_Equals(arc_rec.geom, ST_EndPoint(a.geom))
+        ) INTO node_found;
         
-        IF node_count = 0 THEN
+        IF NOT node_found THEN
             INSERT INTO spatial_error (error_type, error_message)
             VALUES ('Arc-Node Network Error', 
                     'Node <NODE_TABLE_NAME> ' || arc_rec.keys || ' is not related to any vertex');

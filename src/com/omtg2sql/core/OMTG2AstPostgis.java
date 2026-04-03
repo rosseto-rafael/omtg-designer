@@ -100,20 +100,16 @@ public class OMTG2AstPostgis {
 			if (omtgRel.typeEquals("conventional-relationship")) {
 
 				if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.ONE_TO_ONE)) {
-//					System.out.println("one_to_one");
 					astPostgisGenerator.mapConventionalRelationship11(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				else if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.ONE_TO_MANY)) {
-//					System.out.println("one_to_many");
 					astPostgisGenerator.mapConventionalRelationship1N(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				else if (((OMTGConventionalRelationship)omtgRel).cardinalityIsEqual(OMTGCardinality.MANY_TO_ONE)) {
-//					System.out.println("many_to_one");
 					astPostgisGenerator.mapConventionalRelationshipN1(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 				// Relationship is Many to Many
 				else {
-//					System.out.println("many_to_many");
 					astPostgisGenerator.mapConventionalRelationshipMN(omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
 				}
 			}

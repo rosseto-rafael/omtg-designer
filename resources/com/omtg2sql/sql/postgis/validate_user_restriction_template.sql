@@ -3,14 +3,15 @@
 CREATE OR REPLACE FUNCTION trg_val_usr_rest_<VAL_TOP_REL_NAME>_func()
 RETURNS TRIGGER AS $$
 DECLARE
-    found_count INTEGER;
+    found BOOLEAN;
 BEGIN
-    SELECT COUNT(*) INTO found_count
-    FROM <A_TABLE_NAME> a
-    WHERE <OPERATOR> <SPATIAL_RELATION_FUNCTION>
-    LIMIT 1;
+    SELECT EXISTS (
+        SELECT 1
+        FROM <A_TABLE_NAME> a
+        WHERE <OPERATOR> <SPATIAL_RELATION_FUNCTION>
+    ) INTO found;
     
-    IF found_count = 0 THEN
+    IF NOT found THEN
         RAISE EXCEPTION 'User restriction between <A_TABLE_NAME> and <B_TABLE_NAME> (<B_TABLE_KEYS_FORMAT>) is <NOT_OPERATOR> <SPATIAL_RELATION>'<B_TABLE_KEYS_ARGS>;
     END IF;
     

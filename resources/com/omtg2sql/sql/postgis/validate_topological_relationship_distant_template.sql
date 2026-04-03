@@ -3,14 +3,15 @@
 CREATE OR REPLACE FUNCTION trg_val_top_rel_<VAL_TOP_REL_NAME>_distant_func()
 RETURNS TRIGGER AS $$
 DECLARE
-    found_count INTEGER;
+    found BOOLEAN;
 BEGIN
-    SELECT COUNT(*) INTO found_count
-    FROM <A_TABLE_NAME> a
-    WHERE NOT ST_DWithin(a.geom, NEW.geom, <DISTANCE>)
-    LIMIT 1;
+    SELECT EXISTS (
+        SELECT 1
+        FROM <A_TABLE_NAME> a
+        WHERE NOT ST_DWithin(a.geom, NEW.geom, <DISTANCE>)
+    ) INTO found;
     
-    IF found_count = 0 THEN
+    IF NOT found THEN
         RAISE EXCEPTION 'Topological relationship DISTANT between <A_TABLE_NAME> and <B_TABLE_NAME> (<B_TABLE_KEYS_FORMAT>) is not satisfied (distance=<DISTANCE>)'<B_TABLE_KEYS_ARGS>;
     END IF;
     
