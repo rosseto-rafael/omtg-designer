@@ -52,6 +52,41 @@
     margin-top: -12px;
 }
 
+input.project-name-input.navbar-brand {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background: transparent;
+	font-size: 18px;
+	font-weight: 500;
+	color: #777;
+	padding: 6px 10px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	outline: none;
+	width: 280px;
+	max-width: 300px;
+	height: 34px;
+	line-height: 1.2;
+	text-overflow: ellipsis;
+	transition: border-color 0.2s, background-color 0.2s;
+}
+
+input.project-name-input.navbar-brand:hover {
+	border-color: #ccc;
+}
+
+input.project-name-input.navbar-brand:focus {
+	border-color: #66afe9;
+	color: #333;
+	background: #fff;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 4px rgba(102,175,233,.4);
+}
+
+input.project-name-input::placeholder {
+	color: #999;
+	font-style: italic;
+}
+
 .dropdown-header-bold{
 	font-weight: bold !important;
 }
