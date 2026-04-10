@@ -429,6 +429,17 @@ path {
 
 
 /*
+ * Selection Rectangle
+ */
+.selection-rectangle {
+	position: absolute;
+	border: 1px dashed #337ab7;
+	background-color: rgba(51, 122, 183, 0.08);
+	pointer-events: none;
+	z-index: 1000;
+}
+
+/*
  * Context Menu
  */
  
