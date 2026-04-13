@@ -187,16 +187,6 @@ public class DDLWriter extends SQLWriter {
 			List<String> scale, List<Boolean> notNullColumns, List<String> defaultColumns, String spatialType,
 			List<String> sizeColumns, int numberPrimaryKeys, boolean hasDomain) {
 
-		for (int i = 0; i < columnsName.size(); i++) {
-
-			// not append the column that is multivalued
-			if (sizeColumns.get(i) == null || sizeColumns.get(i).equalsIgnoreCase("1")) {
-				appendColumn(columnsName.get(i),
-						OMTG2AstPostgisMapper.mapAttributeType(columnsType.get(i), length.get(i), scale.get(i)),
-						defaultColumns.get(i), notNullColumns.get(i));
-			}
-		}
-
 		// append the spatial column
 		String type = "";
 		switch(spatialType){
@@ -224,8 +214,30 @@ public class DDLWriter extends SQLWriter {
 				type = "ast_tin";
 				break;
 		}
-		
-		if (!spatialType.equalsIgnoreCase("conventional")) {
+
+		boolean hasSpatialColumn = !spatialType.equalsIgnoreCase("conventional") && !type.isEmpty();
+		boolean hasFollowingContent = hasSpatialColumn || numberPrimaryKeys > 0 || hasDomain;
+
+		int lastColumnIndex = -1;
+		for (int i = columnsName.size() - 1; i >= 0; i--) {
+			if (sizeColumns.get(i) == null || sizeColumns.get(i).equalsIgnoreCase("1")) {
+				lastColumnIndex = i;
+				break;
+			}
+		}
+
+		for (int i = 0; i < columnsName.size(); i++) {
+
+			// not append the column that is multivalued
+			if (sizeColumns.get(i) == null || sizeColumns.get(i).equalsIgnoreCase("1")) {
+				boolean needsComma = (i != lastColumnIndex) || hasFollowingContent;
+				appendColumn(columnsName.get(i),
+						OMTG2AstPostgisMapper.mapAttributeType(columnsType.get(i), length.get(i), scale.get(i)),
+						defaultColumns.get(i), notNullColumns.get(i), null, needsComma);
+			}
+		}
+
+		if (hasSpatialColumn) {
 			if (numberPrimaryKeys > 0 || hasDomain) {
 				appendColumn("geom", type, true);
 			} else {
