@@ -35,16 +35,12 @@ public class XMLParser {
 		this.relationships = new HashMap<String, OMTGRelationship>();
 		new Log(xmlDocName);
 		this.logger = Logger.getLogger(xmlDocName+"-log");
-		//this.generalizations = new HashMap<String, OMTGGeneralization>();		
 	}
 
 	private boolean getXMLDocument(String xmlFilePath) {
 
-		//SAXBuilder parser = new SAXBuilder();
-
 		try {
 			doc = new JDOMValidator().createSaxBuilder("../omtg-schema-template/omtg-schema-template.xsd", xmlFilePath);
-			//doc = parser.build(xmlFilePath);
 			return true;
 		} catch (Exception e) {
 

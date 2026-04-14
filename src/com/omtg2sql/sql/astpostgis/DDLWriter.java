@@ -8,18 +8,13 @@ import com.omtg2sql.util.FormatSQL;
 
 public class DDLWriter extends SQLWriter {
 
-//	private boolean create_sa_aux_table, create_spatial_error_table;
 
 	public DDLWriter(String sqlFilePath) {
 		super(sqlFilePath);
-//		create_sa_aux_table = true;
-//		create_spatial_error_table = true;
 	}
 
 	public DDLWriter(StringWriter sw) {
 		super(sw);
-//		create_sa_aux_table = true;
-//		create_spatial_error_table = true;
 	}
 
 	public void appendCreateTable(String tableName, List<String> columnsName, List<String> columnsType,
@@ -57,7 +52,6 @@ public class DDLWriter extends SQLWriter {
 
 		appendComment("Add new column (foreign key) on table " + mainTableName + " due " + relationshipName);
 		appendSQL("ALTER TABLE " + mainTableName);		
-		//appendColumns(keysName, keysType, length, scale, secTableName);
 		
 		for (int i = 0; i < keysName.size(); i++) {
 			appendColumn("ADD COLUMN", keysName.get(i), OMTG2AstPostgisMapper.mapAttributeType(keysType.get(i), length.get(i), scale.get(i)), 
@@ -164,15 +158,6 @@ public class DDLWriter extends SQLWriter {
 		appendSQL(sql, 2);
 	}
 
-//	private void appendColumns(List<String> columns, List<String> types, List<String> length, List<String> scale,
-//			String prefix) {
-//
-//		for (int i = 0; i < columns.size(); i++) {
-//			appendColumnWithComma(columns.get(i),
-//					OMTG2AstPostgisMapper.mapAttributeType(types.get(i), length.get(i), scale.get(i)), prefix,
-//					i == columns.size() - 1 ? false : true);
-//		}
-//	}
 
 	private void appendColumnsWithComma(List<String> columns, List<String> types, List<String> length,
 			List<String> scale, String prefix) {
@@ -246,22 +231,6 @@ public class DDLWriter extends SQLWriter {
 		}
 	}
 
-//	public void appendInsertIntoUserSdoGeomMetadata(String tableName, String srid) {
-//
-//		appendInsertIntoUserSdoGeomMetadata(tableName, srid, "geom");
-//	}
-
-//	public void appendInsertIntoUserSdoGeomMetadata(String tableName, String srid, String geomColumnName) {
-//
-//		appendComment("Insert the geom column of " + tableName + " into metadata table USER_SDO_GEOM_METADATA");
-//		appendSQL("INSERT INTO USER_SDO_GEOM_METADATA (TABLE_NAME, COLUMN_NAME, DIMINFO, SRID)");
-//		appendSQL("VALUES ('" + tableName + "', '" + geomColumnName + "',", 2);
-//		appendSQL("MDSYS.SDO_DIM_ARRAY", 4);
-//		appendSQL("(MDSYS.SDO_DIM_ELEMENT('X', -180.000000000, 180.000000000, 0.005),", 6);
-//		appendSQL("MDSYS.SDO_DIM_ELEMENT('Y', -90.000000000, 90.000000000, 0.005)),", 6);
-//		appendSQL("'29100');", 4); // default srid 29100
-//		appendSQL("");
-//	}
 
 	public void appendCreateSpatialIndex(String tableName) {
 
@@ -304,36 +273,5 @@ public class DDLWriter extends SQLWriter {
 			}
 		}
 	}
-
-//	public void createSaAuxTable() {
-//
-//		if (create_sa_aux_table) {
-//
-//			appendComment("Create the Sa_aux table to support spatial aggregation constraint");
-//			appendSQL("CREATE TABLE Sa_aux (");
-//			appendColumn("w_rowid", "ROWID", true);
-//			appendColumn("p_rowid", "ROWID", true);
-//			appendColumn("p_geom", "MDSYS.SDO_GEOMETRY", false);
-//			appendSQL(");");
-//			appendSQL("");
-//		}
-//
-//		create_sa_aux_table = false;
-//	}
-
-//	public void createSpatialErrorTable() {
-//
-//		if (create_spatial_error_table) {
-//
-//			appendComment("Create the Spatial_error table to contains spatial integrity constraint error messages");
-//			appendSQL("CREATE TABLE Spatial_error (");
-//			appendColumn("type", "VARCHAR2(100)", true);
-//			appendColumn("error", "VARCHAR2(500)", false);
-//			appendSQL(");");
-//			appendSQL("");
-//		}
-//
-//		create_spatial_error_table = false;
-//	}
 }
 

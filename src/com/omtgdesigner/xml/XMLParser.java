@@ -439,8 +439,6 @@ public class XMLParser {
 		String class1Name = element.getChildTextTrim("class1");
 
 		String spatialRelation = null;
-//		String distance = null;
-//		String unit = null;
 
 		List<String> spatialRelations = new ArrayList<String>();
 		List<Element> spatialRelationList = element.getChild(

@@ -12,7 +12,6 @@ import com.omtg2sql.omtg.relationships.OMTGConventionalRelationship;
 import com.omtg2sql.omtg.relationships.OMTGGeneralization;
 import com.omtg2sql.omtg.relationships.OMTGRelationship;
 import com.omtg2sql.omtg.relationships.OMTGTopologicalRelationship;
-//import com.omtg2sql.omtg.relationships.OMTGUserRestriction;
 import com.omtg2sql.sql.astpostgis.AstPostgisGenerator;
 
 
@@ -142,10 +141,6 @@ public class OMTG2AstPostgis {
 					astPostgisGenerator.mapNetwork(omtgRel, omtgClassB, omtgClassA, omtgClassBList, omtgClassAList);
 				}
 			}
-//			else if (omtgRel.typeEquals("user-restriction") && !omtgClassesIsTesselation) {
-//
-//				astPostgisGenerator.mapUserRestriction((OMTGUserRestriction)omtgRel, omtgClassA, omtgClassB, omtgClassAList, omtgClassBList);
-//			}
 		}
 		astPostgisGenerator.close();
 	}
