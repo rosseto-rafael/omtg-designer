@@ -6,9 +6,9 @@
 		events : {
 			'click #btnImportXML' : 'importXML',
 			'click #btnExportXML' : 'exportXML',
-			'click #btnExportSQL' : 'exportSQL',
-			'click #btnExportAstPostgis' : 'exportAstPostgis',
-			'click #btnExportPostgis' : 'exportPostgis',
+			'click .js-export-sql' : 'exportSQL',
+			'click .js-export-astpostgis' : 'exportAstPostgis',
+			'click .js-export-postgis' : 'exportPostgis',
 			'click #btnPrint' : 'print',
 			'click #btnAbout' : 'showAbout',
 			'input #projectNameInput' : 'onProjectNameInput',
@@ -19,6 +19,65 @@
 			'change #tgglShadow': 'changeDiagramShadow',
 			'change #tgglSnapToGrid': 'changeSnapToGrid',
 			'click #dropSettings' : 'dropSettingsClick',
+		},
+
+		initialize : function() {
+			var self = this;
+			this._fitNavbar = _.bind(this._fitNavbar, this);
+			$(window).on('resize', _.debounce(this._fitNavbar, 100));
+			$(window).on('load', this._fitNavbar);
+			// Run once after the current render/layout pass settles.
+			_.defer(this._fitNavbar);
+		},
+
+		// Progressive (priority) navigation: collapse the navbar content in
+		// stages as the viewport shrinks, instead of letting it wrap onto a
+		// second line.
+		//   1. full     – every item visible on a single line
+		//   2. merged    – the three SQL exports collapse into one dropdown
+		//   3. collapsed – everything moves into the hamburger menu
+		_fitNavbar : function() {
+			var $nav = this.$el;
+			$nav.removeClass('nav-merged nav-collapsed');
+
+			// Below the standard navbar breakpoint always use the hamburger.
+			if (window.innerWidth < 768) {
+				$nav.addClass('nav-merged nav-collapsed');
+				return;
+			}
+
+			if (this._isNavbarWrapped()) {
+				$nav.addClass('nav-merged');
+				if (this._isNavbarWrapped()) {
+					$nav.addClass('nav-collapsed');
+				}
+			}
+		},
+
+		_isNavbarWrapped : function() {
+			var header = this.$el.find('.navbar-header')[0];
+			var left = this.$el.find('.navbar-left')[0];
+			var right = this.$el.find('.navbar-right')[0];
+			if (!header) {
+				return false;
+			}
+			// Use viewport coordinates (getBoundingClientRect) so the test is
+			// not affected by offsetParent quirks.
+			var headerRect = header.getBoundingClientRect();
+			var threshold = (headerRect.height || 50) * 0.5;
+			var leftRect = left && left.getBoundingClientRect();
+			// The menu dropped below the brand (no room beside it)...
+			if (leftRect && (leftRect.top - headerRect.top > threshold)) {
+				return true;
+			}
+			// ...or the right-aligned group dropped below the left group.
+			if (leftRect && right) {
+				var rightRect = right.getBoundingClientRect();
+				if (rightRect.top - leftRect.top > threshold) {
+					return true;
+				}
+			}
+			return false;
 		},
 
 		onProjectNameInput : function() {

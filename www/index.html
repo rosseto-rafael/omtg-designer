@@ -37,11 +37,24 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-left">
-						<li><a id='btnImportXML' href="#"><span class="glyphicon glyphicon-floppy-open" ></span> Import XML</a></li> 
-						<li><a id='btnExportXML' href="#"><span class="glyphicon glyphicon-floppy-save" ></span> Export to XML</a></li> 
-						<li><a id='btnExportSQL' href="#"><span class="glyphicon glyphicon-export" ></span> Export to Oracle/SQL</a></li> 
-						<li><a id='btnExportAstPostgis' href="#"><span class="glyphicon glyphicon-export" ></span> Export to AST-PostGIS</a></li> 
-						<li><a id='btnExportPostgis' href="#"><span class="glyphicon glyphicon-export" ></span> Export to PostGIS</a></li> 
+						<li><a id='btnImportXML' href="#"><span class="glyphicon glyphicon-floppy-open" ></span> Import XML</a></li>
+						<li><a id='btnExportXML' href="#"><span class="glyphicon glyphicon-floppy-save" ></span> Export to XML</a></li>
+
+						<!-- Individual SQL export buttons (wide screens) -->
+						<li class="export-single"><a class="js-export-sql" href="#"><span class="glyphicon glyphicon-export" ></span> Export to Oracle/SQL</a></li>
+						<li class="export-single"><a class="js-export-astpostgis" href="#"><span class="glyphicon glyphicon-export" ></span> Export to AST-PostGIS</a></li>
+						<li class="export-single"><a class="js-export-postgis" href="#"><span class="glyphicon glyphicon-export" ></span> Export to PostGIS</a></li>
+
+						<!-- Grouped SQL export dropdown (narrow screens) -->
+						<li class="dropdown export-group">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-export" ></span> Export to SQL <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a class="js-export-sql" href="#"><span class="glyphicon glyphicon-export" ></span> Export to Oracle/SQL</a></li>
+								<li><a class="js-export-astpostgis" href="#"><span class="glyphicon glyphicon-export" ></span> Export to AST-PostGIS</a></li>
+								<li><a class="js-export-postgis" href="#"><span class="glyphicon glyphicon-export" ></span> Export to PostGIS</a></li>
+							</ul>
+						</li>
+
      					<li><a id='btnPrint' href="#"><span class="glyphicon glyphicon-print" ></span> Print Project</a></li>
 						<li><a href="http://homepages.dcc.ufmg.br/~clodoveu/DocuWiki/doku.php?id=omtg" target='_blank'><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Learn OMT-G</a></li>
 						<li><a id='btnAbout' href="#"><span class="glyphicon glyphicon-info-sign" ></span> About</a></li>
